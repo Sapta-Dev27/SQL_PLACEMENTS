@@ -17,3 +17,6 @@ Notes : 1 => No of days between : DATEDIFF( date1 , date2) .
         2 => Check the question . It does not clearly mentions that 2021 and 2 posts atleast should be checked
         
 <img width="1895" height="674" alt="image" src="https://github.com/user-attachments/assets/b7caeff0-f754-4604-9941-e13258cb736b" />
+
+# Well paid employees
+<img width="1605" height="698" alt="image" src="https://github.com/user-attachments/assets/0f85bdc3-ca94-4f59-b574-b61ed83d21b8" />
