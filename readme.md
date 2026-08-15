@@ -628,3 +628,282 @@ If `phone` is `NULL`, the query returns:
 
 ---
 
+## 24. What is the purpose of the SQL CASE statement?
+
+`CASE` is used to implement **conditional logic in SQL**. It works similar to `if-else`.
+
+### Example
+
+    SELECT
+        name,
+        salary,
+        CASE
+            WHEN salary < 40000 THEN 'Low'
+            WHEN salary <= 80000 THEN 'Medium'
+            ELSE 'High'
+        END AS salary_level
+    FROM Employees;
+
+### Interview Answer
+
+> The CASE statement is used to implement conditional logic in SQL. It evaluates conditions and returns different values depending on which condition is satisfied. It can be used in SELECT, WHERE, ORDER BY and other SQL clauses.
+
+### Remember
+
+> **CASE = IF / ELSE in SQL**
+
+---
+
+## 25. What is a View in SQL?
+
+A **view is a virtual table created from a SQL query**.
+
+### Example
+
+    CREATE VIEW IT_Employees AS
+    SELECT name, email
+    FROM Employees
+    WHERE department = 'IT';
+
+Now we can use:
+
+    SELECT *
+    FROM IT_Employees;
+
+A normal view generally stores the **query definition**, not a separate physical copy of the result data.
+
+### Why Use Views?
+
+- Simplify complex queries
+- Improve security by exposing selected data
+- Provide abstraction over underlying tables
+- Reuse commonly needed queries
+
+### Interview Answer
+
+> A view is a virtual table based on a SQL query. It is useful for simplifying complex queries, providing controlled access to data and presenting a specific representation of the underlying tables.
+
+### Remember
+
+> **View = Virtual table based on a query**
+
+---
+
+## 26. How does EXISTS work, and when would you use it?
+
+`EXISTS` checks whether a subquery returns **at least one row**.
+
+It returns:
+
+    TRUE  → At least one matching row exists
+    FALSE → No matching row exists
+
+### Example
+
+Find customers who have placed at least one order:
+
+    SELECT c.name
+    FROM Customers c
+    WHERE EXISTS (
+        SELECT 1
+        FROM Orders o
+        WHERE o.customer_id = c.id
+    );
+
+### Why `SELECT 1`?
+
+With `EXISTS`, we only care whether a row exists, not what value the subquery returns.
+
+### Interview Answer
+
+> EXISTS is used to check whether a subquery returns at least one row. It is commonly used with correlated subqueries when we only care about the existence of related records.
+
+### Remember
+
+> **EXISTS = "Does at least one matching row exist?"**
+
+### EXISTS vs IN
+
+> `IN` compares a value against a set of values, while `EXISTS` checks whether a matching row exists.
+
+---
+
+## 27. What is the purpose of the SQL COUNT() function?
+
+`COUNT()` is an **aggregate function** used to count rows or non-NULL values.
+
+### Count All Rows
+
+    SELECT COUNT(*)
+    FROM Employees;
+
+### Count Non-NULL Values
+
+    SELECT COUNT(email)
+    FROM Employees;
+
+`COUNT(email)` ignores NULL values.
+
+### With GROUP BY
+
+    SELECT
+        customer_id,
+        COUNT(*) AS total_orders
+    FROM Orders
+    GROUP BY customer_id;
+
+This gives the number of orders for each customer.
+
+### Interview Answer
+
+> COUNT() is an aggregate function used to count rows or non-NULL values. It is commonly used with GROUP BY to calculate the number of records in each group.
+
+### Important Difference
+
+> **COUNT(*) → Counts rows**  
+> **COUNT(column) → Counts non-NULL values**
+
+---
+
+## 28. What is the difference between CHAR and VARCHAR?
+
+Both are used to store character strings, but they differ in their length behavior.
+
+### CHAR
+
+`CHAR` is a **fixed-length** character type.
+
+Example:
+
+    CHAR(10)
+
+It is suitable when values have a predictable fixed size.
+
+### VARCHAR
+
+`VARCHAR` is a **variable-length** character type.
+
+Example:
+
+    VARCHAR(100)
+
+It is generally suitable for values whose lengths vary, such as names, emails and addresses.
+
+### Interview Answer
+
+> CHAR is a fixed-length character type, while VARCHAR is a variable-length character type. CHAR is useful when values have a predictable fixed size, whereas VARCHAR is generally more appropriate when string lengths vary.
+
+### Remember
+
+> **CHAR → Fixed**  
+> **VARCHAR → Variable**
+
+---
+
+## 29. What is the difference between UNION and JOIN?
+
+### UNION
+
+`UNION` combines the **rows from multiple SELECT result sets**.
+
+Example:
+
+    SELECT name FROM Customers_2025
+    UNION
+    SELECT name FROM Customers_2026;
+
+`UNION` removes duplicate rows.
+
+### JOIN
+
+`JOIN` combines **related data from multiple tables based on a condition**.
+
+Example:
+
+    SELECT
+        c.name,
+        o.order_id
+    FROM Customers c
+    JOIN Orders o
+        ON c.id = o.customer_id;
+
+### Interview Answer
+
+> UNION combines the result sets of SELECT statements vertically, while JOIN combines related data from multiple tables horizontally based on a join condition.
+
+### Easy Memory
+
+> **UNION → Stack rows**  
+> **JOIN → Combine related columns**
+
+---
+
+## 30. What is the purpose of SQL DDL and DML statements?
+
+SQL commands can be categorized based on what they do.
+
+### DDL — Data Definition Language
+
+DDL is used to **define or modify database structures**.
+
+Common commands:
+
+- `CREATE`
+- `ALTER`
+- `DROP`
+- `TRUNCATE`
+
+### Example
+
+    CREATE TABLE Employees (
+        id INT,
+        name VARCHAR(100)
+    );
+
+Here we are creating the **structure** of a table.
+
+### Interview Answer
+
+> DDL stands for Data Definition Language. It is used to define and modify database structures such as tables, indexes and views. Common DDL commands include CREATE, ALTER, DROP and TRUNCATE.
+
+---
+
+### DML — Data Manipulation Language
+
+DML is used to **insert, modify and delete data** stored in database tables.
+
+Common commands:
+
+- `INSERT`
+- `UPDATE`
+- `DELETE`
+
+### Example
+
+    INSERT INTO Employees
+    VALUES (1, 'Rahul');
+
+Here we are modifying the **data**, not the table structure.
+
+### Interview Answer
+
+> DML stands for Data Manipulation Language. It is used to insert, update and delete data stored in database tables. Common DML commands include INSERT, UPDATE and DELETE.
+
+---
+
+## DDL vs DML
+
+| DDL | DML |
+|---|---|
+| Defines database structure | Manipulates stored data |
+| CREATE | INSERT |
+| ALTER | UPDATE |
+| DROP | DELETE |
+| TRUNCATE | — |
+
+### Easy Memory
+
+> **DDL → What does the database structure look like?**  
+> **DML → What data is inside it?**
+
+---
