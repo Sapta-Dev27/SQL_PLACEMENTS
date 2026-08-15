@@ -297,4 +297,334 @@ Here, `monthly_salary` is the temporary name for `salary` in the query result.
 > An alias does not change the actual database schema.
 
 ---
+# DBMS Interview Preparation 🚀
+
+> Interview-focused notes for the DBMS questions I studied today — Questions 15 onwards.
+
+---
+
+## 15. What is the difference between a Stored Procedure and a Function?
+
+### Stored Procedure
+
+A **stored procedure** is a set of SQL statements stored in the database that can be executed when needed.
+
+It can:
+- Accept input parameters
+- Use output parameters
+- Perform `INSERT`, `UPDATE`, `DELETE`, etc.
+- Execute multiple database operations
+
+### Function
+
+A **function** is generally designed to **return a value** and is commonly used for calculations or transformations.
+
+### Interview Answer
+
+> A stored procedure is mainly used to perform database operations and may have input/output parameters, while a function is generally designed to return a value. Functions can often be used inside SQL expressions such as `SELECT` or `WHERE`, while procedures are normally invoked separately. Exact capabilities depend on the database system.
+
+### Easy Memory
+
+> **Procedure → Perform operations**  
+> **Function → Return a value**
+
+---
+
+## 16. How do you optimize a slow-performing SQL query?
+
+Don't immediately say **"add an index."**
+
+Follow a systematic approach:
+
+1. Analyze the **execution plan** using `EXPLAIN` or DBMS-specific tools.
+2. Check whether appropriate **indexes** exist.
+3. Reduce unnecessary **rows and columns**.
+4. Optimize **JOINs and subqueries**.
+5. Check statistics, locking and database resources.
+6. Measure the query again after optimization.
+
+### Interview Answer
+
+> I would first analyze the execution plan to identify the bottleneck. Then I would check indexes, reduce unnecessary data, optimize joins or subqueries, and investigate database resources or locking if necessary. Finally, I would benchmark the query again to verify that the optimization actually improved performance.
+
+### Strong Interview Point
+
+> **Don't assume an optimization worked — measure it.**
+
+---
+
+## 17. What is an Index, and why is it important?
+
+An **index is a database data structure used to speed up data retrieval**.
+
+### Simple Example
+
+Think of a book:
+
+> Without an index → Search through many pages  
+> With an index → Locate the topic quickly
+
+For example, if we frequently run a query like:
+
+    SELECT *
+    FROM Employees
+    WHERE employee_id = 101;
+
+An appropriate index on `employee_id` can make this lookup much faster.
+
+### Interview Answer
+
+> An index is a data structure maintained by the database to speed up data retrieval. It allows the database to locate matching rows more efficiently instead of scanning the entire table.
+
+### Trade-offs
+
+Indexes:
+- Improve read performance
+- Consume additional storage
+- Add overhead to `INSERT`, `UPDATE` and `DELETE`
+
+### Interview Tip
+
+> Don't create an index on every column. Index based on actual query patterns and workload.
+
+---
+
+## 18. What is a Clustered Index and a Non-Clustered Index?
+
+### Clustered Index
+
+A **clustered index determines how table data is organized according to the indexed key**, depending on the DBMS.
+
+A table can generally have **only one clustered organization**.
+
+### Non-Clustered Index
+
+A **non-clustered index is a separate index structure** that stores indexed values and references to the corresponding table rows.
+
+A table can have **multiple non-clustered indexes**.
+
+### Simple Understanding
+
+Think about a library.
+
+**Clustered:**
+
+The books themselves are organized according to a particular order.
+
+**Non-Clustered:**
+
+There is a separate index that tells you where each book is located.
+
+### Interview Answer
+
+> A clustered index determines how the table's data is organized according to the indexed key, so there can generally be only one clustered organization per table. A non-clustered index is a separate structure that points to the underlying rows, so a table can have multiple non-clustered indexes.
+
+> **Note:** Exact implementation details vary between database systems.
+
+---
+
+## 19. What is the difference between a Super Key, Candidate Key and Primary Key?
+
+### Super Key
+
+A **super key** is any set of columns that can uniquely identify a row.
+
+For example, if `student_id` and `email` are unique:
+
+    {student_id}
+    {email}
+    {student_id, name}
+
+can all be super keys.
+
+Even `{student_id, name}` is a super key, although `name` is unnecessary because `student_id` already uniquely identifies the row.
+
+### Candidate Key
+
+A **candidate key is a minimal super key**.
+
+It uniquely identifies a row without containing unnecessary attributes.
+
+### Primary Key
+
+The **primary key is the candidate key selected as the main identifier** for the table.
+
+### Relationship
+
+    Super Keys
+         ↓
+    Candidate Keys
+         ↓
+    One chosen as Primary Key
+
+### Interview Answer
+
+> A super key is any set of attributes that uniquely identifies a row. A candidate key is a minimal super key with no unnecessary attributes. The primary key is the candidate key selected as the main identifier for the table.
+
+### Easy Memory
+
+> **Super Key → Any unique combination**  
+> **Candidate Key → Minimal unique combination**  
+> **Primary Key → Chosen candidate key**
+
+---
+
+## 20. What is a Trigger in SQL, and how is it used?
+
+A **trigger** is a database mechanism that automatically executes when a specified event occurs.
+
+Common events include:
+
+- `INSERT`
+- `UPDATE`
+- `DELETE`
+
+### Example Use Case
+
+Suppose an employee's salary changes:
+
+    UPDATE Employee
+           ↓
+        Trigger
+           ↓
+    Insert record into Audit_Log
+
+The trigger can automatically create an audit record.
+
+### Common Uses
+
+- Audit logging
+- Tracking changes
+- Enforcing certain database-level rules
+- Maintaining related data
+
+### Interview Answer
+
+> A trigger is a database mechanism that automatically executes a predefined action when a specified event occurs, such as `INSERT`, `UPDATE` or `DELETE`. It can be useful for auditing, enforcing certain database-level rules and maintaining related data.
+
+### Important Trade-off
+
+> Triggers can make application behavior harder to trace because some operations happen implicitly, so they should be used carefully.
+
+---
+
+## 21. Explain the Concept of Database Transactions
+
+A **transaction is a group of database operations treated as one logical unit of work**.
+
+### Example: Bank Transfer
+
+Suppose Rahul transfers ₹1000 to Amit.
+
+Two operations are required:
+
+    1. Rahul's balance → -₹1000
+    2. Amit's balance  → +₹1000
+
+Both operations should succeed together.
+
+If successful:
+
+    COMMIT;
+
+If something goes wrong:
+
+    ROLLBACK;
+
+### Interview Answer
+
+> A database transaction is a sequence of one or more operations treated as a single logical unit of work. The transaction either commits successfully or is rolled back, and database systems use ACID properties to ensure reliable transaction behavior.
+
+### Why Do We Need Transactions?
+
+> Transactions prevent related operations from leaving the database in an inconsistent state if something fails midway.
+
+### Real-World Example
+
+In a banking system, we don't want money to be deducted from one account without being credited to the other.
+
+---
+
+## 22. What is the difference between a UNIQUE Constraint and a PRIMARY KEY Constraint?
+
+Both can enforce uniqueness, but they have different purposes.
+
+| PRIMARY KEY | UNIQUE |
+|---|---|
+| Main identifier of a row | Enforces uniqueness |
+| Cannot be `NULL` | NULL behavior depends on DBMS |
+| One primary-key constraint per table | Multiple UNIQUE constraints allowed |
+| Commonly referenced by foreign keys | Can be referenced where supported |
+
+### Example
+
+A `Users` table might have:
+
+    id        → PRIMARY KEY
+    email     → UNIQUE
+    username  → UNIQUE
+
+Here:
+
+- `id` is the main identity of the user.
+- `email` must be unique.
+- `username` must also be unique.
+
+### Interview Answer
+
+> Both primary keys and unique constraints enforce uniqueness, but a primary key is the main identifier for each row and cannot be `NULL`. A table can have multiple unique constraints, while it has only one primary-key constraint.
+
+### Easy Memory
+
+> **PRIMARY KEY → Main identity**  
+> **UNIQUE → Additional uniqueness rule**
+
+---
+
+## 23. How do you handle NULL values in SQL?
+
+`NULL` represents **missing, unknown or absent information**.
+
+It is not the same as:
+
+- `0`
+- `''`
+- `FALSE`
+
+### Checking NULL
+
+Use:
+
+    WHERE email IS NULL;
+
+or:
+
+    WHERE email IS NOT NULL;
+
+### Don't Use
+
+    WHERE email = NULL;
+
+This does not work as expected.
+
+### Replacing NULL
+
+Use `COALESCE()`:
+
+    SELECT COALESCE(phone, 'Not Provided')
+    FROM Users;
+
+If `phone` is `NULL`, the query returns:
+
+    Not Provided
+
+### Interview Answer
+
+> NULL represents missing or unknown data. We check NULL values using `IS NULL` or `IS NOT NULL` rather than the equals operator. Functions such as `COALESCE()` can be used to provide a default value when a column is NULL.
+
+### Why doesn't `= NULL` work?
+
+> Because NULL represents an unknown value, comparisons with NULL do not evaluate to TRUE. SQL provides `IS NULL` and `IS NOT NULL` specifically for this purpose.
+
+---
 
