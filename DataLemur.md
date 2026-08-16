@@ -20,3 +20,14 @@ Notes : 1 => No of days between : DATEDIFF( date1 , date2) .
 
 # Well paid employees
 <img width="1605" height="698" alt="image" src="https://github.com/user-attachments/assets/0f85bdc3-ca94-4f59-b574-b61ed83d21b8" />
+
+# Pharmacy Analytics 1
+
+<img width="1600" height="758" alt="image" src="https://github.com/user-attachments/assets/2dff0af7-1656-4e62-9368-e96a71e59724" />
+
+# Pharmacy Analytics 2
+<img width="1600" height="708" alt="image" src="https://github.com/user-attachments/assets/04038f43-42e6-45b3-b279-3cdd1a29547c" />
+
+
+# Pharmacy Analytics 3
+<img width="1600" height="472" alt="image" src="https://github.com/user-attachments/assets/d52ce90c-a707-43d2-96f5-a40eb78597ed" />
