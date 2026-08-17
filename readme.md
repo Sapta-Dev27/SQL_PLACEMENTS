@@ -907,3 +907,400 @@ Here we are modifying the **data**, not the table structure.
 > **DML → What data is inside it?**
 
 ---
+# DBMS Interview Preparation — Today's Notes 🚀
+
+> Easy, practical and interview-focused notes for SWE interviews.
+
+---
+
+## 1. What are CTEs (Common Table Expressions), and how are they used?
+
+A **CTE (Common Table Expression)** is a temporary named result set defined using the `WITH` keyword.
+
+It exists only for the duration of a single SQL statement and makes complex queries easier to read and maintain.
+
+### Example
+
+    WITH avg_salary AS (
+        SELECT AVG(salary) AS avg_sal
+        FROM Employees
+    )
+    SELECT name, salary
+    FROM Employees, avg_salary
+    WHERE salary > avg_sal;
+
+### Why use CTEs?
+
+- Makes complex queries easier to understand
+- Improves readability
+- Avoids repeating the same subquery
+- Can be used with `SELECT`, `INSERT`, `UPDATE`, and `DELETE`
+- Can support recursive queries for hierarchical data
+
+### Interview Answer
+
+> A CTE, or Common Table Expression, is a temporary named result set defined using the WITH keyword. It exists only for the duration of a single SQL statement and is mainly used to make complex queries more readable and maintainable. CTEs can also be recursive, which is useful for hierarchical data.
+
+### Remember
+
+> **CTE = Temporary named result used inside a query**
+
+---
+
+## 2. How do you perform Data Paging in SQL?
+
+**Data paging (pagination)** means retrieving a large dataset in smaller chunks instead of returning all rows at once.
+
+For example:
+
+    Page 1 → Users 1–20
+    Page 2 → Users 21–40
+    Page 3 → Users 41–60
+
+### Using LIMIT and OFFSET
+
+For 10 records per page:
+
+    SELECT *
+    FROM Employees
+    LIMIT 10 OFFSET 0;
+
+Page 2:
+
+    SELECT *
+    FROM Employees
+    LIMIT 10 OFFSET 10;
+
+Page 3:
+
+    SELECT *
+    FROM Employees
+    LIMIT 10 OFFSET 20;
+
+### Formula
+
+    OFFSET = (page_number - 1) × page_size
+
+For page 4 with 10 records:
+
+    OFFSET = (4 - 1) × 10
+           = 30
+
+### Interview Answer
+
+> Data paging is used to retrieve a large dataset in smaller chunks instead of returning all rows at once. A common approach is LIMIT and OFFSET, where LIMIT specifies the number of rows and OFFSET specifies how many rows to skip. For very large datasets, keyset or cursor-based pagination can be more efficient than large OFFSET values.
+
+### Important Interview Point
+
+Large `OFFSET` values can become inefficient because the database may still need to process or skip many rows.
+
+For large datasets, **keyset pagination** can be more efficient.
+
+Example:
+
+    SELECT *
+    FROM Employees
+    WHERE id > 1000
+    ORDER BY id
+    LIMIT 20;
+
+### Remember
+
+> **Pagination = Return data in small pages instead of everything at once.**
+
+---
+
+## 3. Explain the Concept of SQL Cursors
+
+A **cursor** allows us to iterate through the rows returned by a query **one row at a time**.
+
+Normally, SQL is designed to work with sets of rows. A cursor is useful when row-by-row processing is specifically required.
+
+### Simple Idea
+
+    100 rows
+       ↓
+    Cursor
+       ↓
+    Row 1 → Process
+    Row 2 → Process
+    Row 3 → Process
+       ...
+    Row 100 → Process
+
+Cursors are commonly used inside stored procedures or database programs.
+
+### Interview Answer
+
+> A cursor is a database mechanism that allows us to iterate through the rows returned by a query one row at a time. It is commonly used in stored procedures when row-by-row processing is required. However, cursors can be slower than set-based SQL operations, so I would prefer normal SQL operations when possible.
+
+### Important Follow-up
+
+**Are cursors always a good choice?**
+
+> No. Set-based SQL operations are generally more efficient because databases are optimized to process sets of rows. I would use a cursor only when row-by-row processing is actually necessary.
+
+### Remember
+
+> **Cursor = Process query results row by row**
+
+---
+
+## 4. What is the Purpose of the SQL TRUNCATE Statement?
+
+`TRUNCATE` is used to **remove all rows from a table quickly**.
+
+Example:
+
+    TRUNCATE TABLE Employees;
+
+After execution, the table remains but its data is removed.
+
+### TRUNCATE vs DELETE
+
+| DELETE | TRUNCATE |
+|---|---|
+| Can delete selected rows | Removes all rows |
+| Can use `WHERE` | Cannot use `WHERE` |
+| Processes row deletions | Typically deallocates/removes data pages more directly |
+| Usually slower for clearing an entire table | Usually faster for clearing an entire table |
+| DELETE triggers may fire | DELETE triggers generally do not fire |
+| Transaction behavior depends on DBMS | Transaction behavior depends on DBMS |
+
+### Example
+
+Delete selected employees:
+
+    DELETE FROM Employees
+    WHERE department = 'HR';
+
+Remove all rows:
+
+    TRUNCATE TABLE Employees;
+
+### Interview Answer
+
+> TRUNCATE is a command used to quickly remove all rows from a table. Unlike DELETE, it does not allow a WHERE condition. It is generally faster for removing all data because it can deallocate data pages rather than processing rows individually. Its transaction, logging and trigger behavior depends on the database system.
+
+### Important Interview Point
+
+Don't simply say:
+
+> "TRUNCATE can never be rolled back."
+
+That is **DBMS-dependent**. Transaction and rollback behavior can differ between database systems.
+
+### Remember
+
+> **DELETE → Remove selected rows**  
+> **TRUNCATE → Remove all rows quickly**
+
+---
+
+## 5. How Can You Prevent and Handle Deadlocks in a Database?
+
+### What is a Deadlock?
+
+A **deadlock occurs when two or more transactions are waiting for resources held by each other, so none of them can continue.**
+
+### Example
+
+    Transaction A
+        ↓
+    Locks Row 1
+        ↓
+    Wants Row 2
+
+    Transaction B
+        ↓
+    Locks Row 2
+        ↓
+    Wants Row 1
+
+Now:
+
+    A waits for B
+    B waits for A
+
+    → DEADLOCK
+
+### How to Prevent Deadlocks?
+
+#### 1. Access resources in a consistent order
+
+For example, always lock:
+
+    Account A → Account B
+
+instead of sometimes:
+
+    A → B
+
+and sometimes:
+
+    B → A
+
+#### 2. Keep transactions short
+
+Don't hold locks longer than necessary.
+
+#### 3. Use appropriate isolation levels
+
+Choose an isolation level based on the application's consistency requirements.
+
+#### 4. Implement retry logic
+
+Databases can detect deadlocks and abort one transaction. The application can then retry the transaction.
+
+### Interview Answer
+
+> A deadlock occurs when two or more transactions hold locks and wait for resources held by each other, so none of them can proceed. To reduce deadlocks, I would keep transactions short, access resources in a consistent order, use appropriate isolation levels and implement retry logic when the database detects a deadlock.
+
+### Remember
+
+> **Deadlock = Transactions waiting for each other**
+
+---
+
+## 6. What is the Difference Between a LEFT OUTER JOIN and a RIGHT OUTER JOIN?
+
+### LEFT OUTER JOIN
+
+Returns:
+
+> **All rows from the LEFT table + matching rows from the RIGHT table.**
+
+If no match is found, the right-side columns contain `NULL`.
+
+Example:
+
+    SELECT
+        c.name,
+        o.order_id
+    FROM Customers c
+    LEFT JOIN Orders o
+        ON c.id = o.customer_id;
+
+Even customers who have no orders will appear.
+
+### RIGHT OUTER JOIN
+
+Returns:
+
+> **All rows from the RIGHT table + matching rows from the LEFT table.**
+
+If no match is found, the left-side columns contain `NULL`.
+
+### Easy Memory
+
+    LEFT JOIN
+    → Keep everything from LEFT
+
+    RIGHT JOIN
+    → Keep everything from RIGHT
+
+### Interview Answer
+
+> A LEFT OUTER JOIN returns all rows from the left table and matching rows from the right table. If there is no match, the right-side columns contain NULL. A RIGHT OUTER JOIN does the opposite: it keeps all rows from the right table and returns matching rows from the left.
+
+### Interview Tip
+
+A `RIGHT JOIN` can usually be rewritten as a `LEFT JOIN` by swapping the table order.
+
+Conceptually:
+
+    A RIGHT JOIN B
+
+is equivalent to:
+
+    B LEFT JOIN A
+
+### Remember
+
+> **LEFT → Keep left**  
+> **RIGHT → Keep right**
+
+---
+
+## 7. What is the Purpose of the SQL ROLLBACK Statement?
+
+`ROLLBACK` is used to **undo changes made during a transaction that have not been committed**.
+
+### Example
+
+    BEGIN;
+
+    UPDATE Accounts
+    SET balance = balance - 1000
+    WHERE id = 1;
+
+    ROLLBACK;
+
+The update is undone according to the transaction semantics of the database.
+
+### Example: Bank Transfer
+
+    Before:
+    Rahul = ₹5000
+
+    UPDATE:
+    Rahul = ₹4000
+
+    Something goes wrong...
+
+    ROLLBACK
+
+    After:
+    Rahul = ₹5000
+
+### COMMIT vs ROLLBACK
+
+    COMMIT
+       ↓
+    Save transaction changes
+
+    ROLLBACK
+       ↓
+    Undo uncommitted transaction changes
+
+### Interview Answer
+
+> ROLLBACK is used to undo changes made by a transaction before those changes are committed. It is useful when an error occurs or when we want to cancel the transaction and restore the database to the previous transactionally consistent state.
+
+### Example
+
+A bank transfer:
+
+    BEGIN
+       ↓
+    Deduct ₹1000 from Rahul
+       ↓
+    Credit ₹1000 to Amit
+       ↓
+    Something fails
+       ↓
+    ROLLBACK
+       ↓
+    Undo the transaction
+
+### Remember
+
+> **COMMIT → Save transaction**  
+> **ROLLBACK → Undo uncommitted transaction**
+
+---
+
+# 🎯 Quick Interview Cheat Sheet
+
+| Question | Easy Memory |
+|---|---|
+| **CTE** | Temporary named result set |
+| **Data Paging** | Retrieve data in smaller pages |
+| **Cursor** | Process rows one by one |
+| **TRUNCATE** | Quickly remove all rows |
+| **Deadlock** | Transactions waiting for each other |
+| **LEFT vs RIGHT JOIN** | Keep LEFT vs Keep RIGHT |
+| **ROLLBACK** | Undo uncommitted transaction changes |
+
+---
+
