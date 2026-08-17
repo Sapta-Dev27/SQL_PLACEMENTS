@@ -31,3 +31,15 @@ Notes : 1 => No of days between : DATEDIFF( date1 , date2) .
 
 # Pharmacy Analytics 3
 <img width="1600" height="472" alt="image" src="https://github.com/user-attachments/assets/d52ce90c-a707-43d2-96f5-a40eb78597ed" />
+
+# SECOND HIGHEST SALARY 
+<img width="1600" height="760" alt="image" src="https://github.com/user-attachments/assets/3602ee1d-1ced-4768-b1d3-e3b2066c6354" />
+
+# DUPLICATE JOB LISTINGS 
+<img width="1600" height="715" alt="image" src="https://github.com/user-attachments/assets/b572e466-3d15-45f9-a8f0-7244b49e1d64" />
+
+# COMPRESSED MEAN
+<img width="1600" height="506" alt="image" src="https://github.com/user-attachments/assets/2e889bb3-d1e8-4aa9-81cd-fdbc2d869d9b" />
+
+
+
