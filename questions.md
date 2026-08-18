@@ -1035,9 +1035,464 @@ Employee → Manager
 
 ---
 
-# ⚠️ SQL Dialect Note
 
-The Question 10 solution uses:
 
-```sql
-TOP 1
+# DBMS Interview Preparation — Questions 11 to 15
+
+> Easy, practical and interview-focused notes for SWE interviews.
+
+---
+
+## 11. A table has 100 million records. You want to remove all rows as quickly as possible while keeping the table. Which SQL command will you use?
+
+### Answer
+
+Use `TRUNCATE TABLE`.
+
+    TRUNCATE TABLE Employees;
+
+`TRUNCATE` removes all rows from the table but **keeps the table structure**.
+
+### Why TRUNCATE?
+
+- Removes all rows quickly
+- Keeps the table structure
+- Generally faster than `DELETE` for clearing an entire table
+- Does not require a `WHERE` condition
+
+### TRUNCATE vs DELETE
+
+| DELETE | TRUNCATE |
+|---|---|
+| Can delete selected rows | Removes all rows |
+| Supports `WHERE` | Does not support `WHERE` |
+| Generally processes row deletions | Typically removes/deallocates data pages more directly |
+| Usually slower for full-table cleanup | Usually faster for full-table cleanup |
+| DELETE triggers may fire | DELETE triggers generally do not fire |
+| Transaction behavior depends on DBMS | Transaction behavior depends on DBMS |
+
+### Interview Answer
+
+> "If I need to remove all 100 million rows while keeping the table structure, I would use TRUNCATE TABLE. It is generally faster than DELETE for full-table cleanup because it can deallocate data pages more efficiently."
+
+### Important Point
+
+Do not blindly say:
+
+> "TRUNCATE can never be rolled back."
+
+Rollback behavior is **database-dependent**.
+
+### Remember
+
+> **TRUNCATE = Remove all data, keep the table**
+
+---
+
+## 12. A new intern should only be able to view the Employees table but should not modify it. Which SQL command will you use?
+
+### Answer
+
+Use the `GRANT` statement to give the intern only `SELECT` permission.
+
+    GRANT SELECT ON Employees TO intern_user;
+
+This allows the user to read data from the `Employees` table.
+
+Do not give:
+
+    INSERT
+    UPDATE
+    DELETE
+
+permissions if the user should only be able to view the data.
+
+### Example
+
+    GRANT SELECT ON Employees TO intern_user;
+
+Now:
+
+    SELECT * FROM Employees;
+
+will be allowed.
+
+But operations such as:
+
+    UPDATE Employees
+    SET salary = 50000;
+
+should not be allowed if the user has no `UPDATE` privilege.
+
+### Interview Answer
+
+> "I would use GRANT to provide the intern with only SELECT permission on the Employees table. This follows the principle of least privilege, meaning the user receives only the permissions required for their job."
+
+### Important Interview Concept: Principle of Least Privilege
+
+Give a user **only the minimum permissions they actually need**.
+
+For example:
+
+    Intern
+      ↓
+    SELECT only
+
+    Developer
+      ↓
+    SELECT + INSERT + UPDATE
+
+    Admin
+      ↓
+    Higher-level privileges
+
+### Remember
+
+> **GRANT = Give permission**
+
+---
+
+## 13. An alias created in the SELECT list cannot be referenced in the WHERE clause of the same query. How does SQL's logical execution order explain this?
+
+### The Problem
+
+Consider:
+
+    SELECT
+        salary * 12 AS annual_salary
+    FROM Employees
+    WHERE annual_salary > 600000;
+
+In many SQL databases, this is invalid.
+
+### Why?
+
+Because of SQL's **logical query processing order**.
+
+Conceptually, SQL processes the query like this:
+
+    FROM
+      ↓
+    WHERE
+      ↓
+    GROUP BY
+      ↓
+    HAVING
+      ↓
+    SELECT
+      ↓
+    ORDER BY
+
+The `WHERE` clause is evaluated **before** the `SELECT` list.
+
+Therefore, when `WHERE` is evaluated:
+
+    annual_salary
+
+has not been created yet.
+
+The alias is created when the `SELECT` list is evaluated later.
+
+### Correct Approach
+
+Repeat the expression:
+
+    SELECT
+        salary * 12 AS annual_salary
+    FROM Employees
+    WHERE salary * 12 > 600000;
+
+Or use a subquery:
+
+    SELECT *
+    FROM (
+        SELECT
+            salary * 12 AS annual_salary
+        FROM Employees
+    ) AS t
+    WHERE annual_salary > 600000;
+
+Or use a CTE:
+
+    WITH employee_salary AS (
+        SELECT
+            salary * 12 AS annual_salary
+        FROM Employees
+    )
+    SELECT *
+    FROM employee_salary
+    WHERE annual_salary > 600000;
+
+### Important Exception
+
+A SELECT alias can generally be used in `ORDER BY` because `ORDER BY` is logically processed after `SELECT`.
+
+Example:
+
+    SELECT
+        salary * 12 AS annual_salary
+    FROM Employees
+    ORDER BY annual_salary DESC;
+
+### Interview Answer
+
+> "A SELECT alias generally cannot be used in the WHERE clause because WHERE is logically evaluated before SELECT. The alias does not exist yet when WHERE is processed. If I need to filter using that calculated value, I can repeat the expression or use a subquery or CTE."
+
+### Remember
+
+> **WHERE happens before SELECT → SELECT alias is not available in WHERE**
+
+---
+
+## 14. A ranking query contains duplicate salaries. How will ROW_NUMBER(), RANK(), and DENSE_RANK() assign values differently?
+
+Suppose we have:
+
+| Employee | Salary |
+|---|---:|
+| Aman | 90000 |
+| Neha | 80000 |
+| Ravi | 80000 |
+| Simran | 70000 |
+
+Query:
+
+    SELECT
+        employee,
+        salary,
+        ROW_NUMBER() OVER (ORDER BY salary DESC) AS row_no,
+        RANK() OVER (ORDER BY salary DESC) AS rank_no,
+        DENSE_RANK() OVER (ORDER BY salary DESC) AS dense_rank_no
+    FROM Employees;
+
+### Result
+
+| Employee | Salary | ROW_NUMBER | RANK | DENSE_RANK |
+|---|---:|---:|---:|---:|
+| Aman | 90000 | 1 | 1 | 1 |
+| Neha | 80000 | 2 | 2 | 2 |
+| Ravi | 80000 | 3 | 2 | 2 |
+| Simran | 70000 | 4 | 4 | 3 |
+
+### 1. ROW_NUMBER()
+
+Gives every row a **unique sequential number**.
+
+Even if salaries are equal:
+
+    80000 → 2
+    80000 → 3
+
+There is no tie in the row numbers.
+
+### 2. RANK()
+
+Rows with the same salary get the **same rank**.
+
+But after a tie, it **skips ranks**.
+
+    90000 → 1
+    80000 → 2
+    80000 → 2
+    70000 → 4
+
+Rank `3` is skipped.
+
+### 3. DENSE_RANK()
+
+Rows with the same salary get the **same rank**, but there are **no gaps**.
+
+    90000 → 1
+    80000 → 2
+    80000 → 2
+    70000 → 3
+
+### Easy Comparison
+
+| Function | Handles Ties? | Gaps After Tie? |
+|---|---|---|
+| `ROW_NUMBER()` | No, each row gets a unique number | No |
+| `RANK()` | Yes | Yes |
+| `DENSE_RANK()` | Yes | No |
+
+### Easy Memory Trick
+
+> **ROW_NUMBER → Everyone gets a different number**
+
+> **RANK → Same rank for ties, but gaps**
+
+> **DENSE_RANK → Same rank for ties, no gaps**
+
+### Interview Answer
+
+> "`ROW_NUMBER()` assigns a unique sequential number to every row, even when values are tied. `RANK()` gives the same rank to tied values but leaves gaps after the tie. `DENSE_RANK()` also gives the same rank to tied values, but it does not leave gaps."
+
+### Real-World Use Cases
+
+**ROW_NUMBER()**
+
+Useful when you need to select one specific row from each group.
+
+**RANK()**
+
+Useful when competition-style ranking matters and ties should create gaps.
+
+**DENSE_RANK()**
+
+Useful when you want ranking based on distinct values without gaps.
+
+---
+
+## 15. A table contains duplicate and NULL email values. How will COUNT(*), COUNT(email), and COUNT(DISTINCT email) differ?
+
+Suppose the table contains:
+
+| id | email |
+|---:|---|
+| 1 | a@gmail.com |
+| 2 | b@gmail.com |
+| 3 | a@gmail.com |
+| 4 | NULL |
+| 5 | NULL |
+
+Now consider:
+
+    SELECT
+        COUNT(*) AS total_rows,
+        COUNT(email) AS non_null_emails,
+        COUNT(DISTINCT email) AS unique_non_null_emails
+    FROM Customers;
+
+### 1. COUNT(*)
+
+`COUNT(*)` counts **every row**, including rows containing NULL values.
+
+For the example:
+
+    COUNT(*) = 5
+
+### 2. COUNT(email)
+
+`COUNT(email)` counts only rows where `email` is **NOT NULL**.
+
+NULL values are ignored.
+
+For the example:
+
+    COUNT(email) = 3
+
+because:
+
+    a@gmail.com
+    b@gmail.com
+    a@gmail.com
+
+are the three non-NULL values.
+
+### 3. COUNT(DISTINCT email)
+
+`COUNT(DISTINCT email)` counts only **unique non-NULL email values**.
+
+The values are:
+
+    a@gmail.com
+    b@gmail.com
+    a@gmail.com
+
+Unique values:
+
+    a@gmail.com
+    b@gmail.com
+
+Therefore:
+
+    COUNT(DISTINCT email) = 2
+
+### Final Result
+
+| Function | Result | What it counts |
+|---|---:|---|
+| `COUNT(*)` | 5 | Every row |
+| `COUNT(email)` | 3 | Non-NULL email values |
+| `COUNT(DISTINCT email)` | 2 | Unique non-NULL email values |
+
+### Interview Answer
+
+> "`COUNT(*)` counts every row, including rows where email is NULL. `COUNT(email)` counts only non-NULL email values. `COUNT(DISTINCT email)` counts only unique non-NULL email values, so duplicates and NULLs are excluded."
+
+### Easy Memory
+
+> **COUNT(*) → All rows**
+
+> **COUNT(column) → Non-NULL values**
+
+> **COUNT(DISTINCT column) → Unique non-NULL values**
+
+---
+
+# 🎯 Quick Interview Cheat Sheet
+
+| Question | Key Concept | Easy Memory |
+|---|---|---|
+| **11. Remove 100M rows** | `TRUNCATE` | Remove all data, keep table |
+| **12. Give intern read-only access** | `GRANT SELECT` | Give only required permission |
+| **13. SELECT alias in WHERE** | Logical execution order | WHERE happens before SELECT |
+| **14. ROW_NUMBER vs RANK vs DENSE_RANK** | Window functions | Unique vs gaps vs no gaps |
+| **15. COUNT variations** | Aggregate functions | All vs non-NULL vs unique |
+
+---
+
+# 🔥 SWE Interview Tip
+
+For these questions, don't stop at the definition.
+
+Try to answer using:
+
+> **Definition → How it works → Small example → Important difference/trade-off**
+
+For example:
+
+**Interviewer:** "What's the difference between RANK and DENSE_RANK?"
+
+A strong answer would be:
+
+> "Both assign the same rank to tied values. The difference is that RANK leaves gaps after a tie, while DENSE_RANK does not. For example, if two employees are ranked second, the next employee gets rank 4 with RANK but rank 3 with DENSE_RANK."
+
+That sounds much stronger than simply memorizing:
+
+> "RANK has gaps and DENSE_RANK doesn't."
+
+---
+
+# 🧠 Most Important Things to Remember
+
+    TRUNCATE
+    → Remove all rows
+    → Keep table structure
+
+    GRANT SELECT
+    → Give read-only access
+
+    WHERE
+    → Comes before SELECT logically
+    → Cannot generally use SELECT aliases
+
+    ROW_NUMBER
+    → Unique number for every row
+
+    RANK
+    → Same rank for ties
+    → Gaps exist
+
+    DENSE_RANK
+    → Same rank for ties
+    → No gaps
+
+    COUNT(*)
+    → Counts every row
+
+    COUNT(column)
+    → Counts non-NULL values
+
+    COUNT(DISTINCT column)
+    → Counts unique non-NULL values
