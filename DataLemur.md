@@ -41,5 +41,11 @@ Notes : 1 => No of days between : DATEDIFF( date1 , date2) .
 # COMPRESSED MEAN
 <img width="1600" height="506" alt="image" src="https://github.com/user-attachments/assets/2e889bb3-d1e8-4aa9-81cd-fdbc2d869d9b" />
 
+# TEAMS POWER USERS 
+<img width="1600" height="717" alt="image" src="https://github.com/user-attachments/assets/5ad7f0c4-dc1c-4ac8-8a12-ae365bc9ba36" />
+
+# CITIES WITH COMPLETED TASKS
+<img width="1600" height="756" alt="image" src="https://github.com/user-attachments/assets/a78f619b-2e5b-46da-ac1e-899196858244" />
+
 
 
