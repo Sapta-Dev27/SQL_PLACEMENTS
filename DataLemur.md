@@ -47,5 +47,7 @@ Notes : 1 => No of days between : DATEDIFF( date1 , date2) .
 # CITIES WITH COMPLETED TASKS
 <img width="1600" height="756" alt="image" src="https://github.com/user-attachments/assets/a78f619b-2e5b-46da-ac1e-899196858244" />
 
+# Average Review Ratings
+<img width="1875" height="841" alt="image" src="https://github.com/user-attachments/assets/acf4441d-0f34-4b7a-852f-a496b4207f48" />
 
 
