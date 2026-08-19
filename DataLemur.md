@@ -50,4 +50,5 @@ Notes : 1 => No of days between : DATEDIFF( date1 , date2) .
 # Average Review Ratings
 <img width="1875" height="841" alt="image" src="https://github.com/user-attachments/assets/acf4441d-0f34-4b7a-852f-a496b4207f48" />
 
-
+# Frequent Callers
+<img width="1600" height="726" alt="image" src="https://github.com/user-attachments/assets/ab4fb411-6791-431a-8dc3-c5a4fea020a3" />
