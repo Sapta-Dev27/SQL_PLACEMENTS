@@ -59,3 +59,5 @@ Notes : 1 => No of days between : DATEDIFF( date1 , date2) .
 # Final Account Balance 
 <img width="1910" height="820" alt="image" src="https://github.com/user-attachments/assets/a5be8beb-f775-4836-b90c-b8f715630f51" />
 
+# SECOND DAY CONFIRMATION
+<img width="1916" height="903" alt="image" src="https://github.com/user-attachments/assets/f2ffba59-bc68-4aed-b92a-0986006d3059" />
