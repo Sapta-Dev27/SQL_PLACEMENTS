@@ -52,3 +52,10 @@ Notes : 1 => No of days between : DATEDIFF( date1 , date2) .
 
 # Frequent Callers
 <img width="1600" height="726" alt="image" src="https://github.com/user-attachments/assets/ab4fb411-6791-431a-8dc3-c5a4fea020a3" />
+
+# App Click Rate
+<img width="1600" height="706" alt="image" src="https://github.com/user-attachments/assets/7dfc4cb5-bed7-491e-ba5e-1c5c5e65d556" />
+
+# Final Account Balance 
+<img width="1910" height="820" alt="image" src="https://github.com/user-attachments/assets/a5be8beb-f775-4836-b90c-b8f715630f51" />
+
