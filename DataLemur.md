@@ -61,3 +61,7 @@ Notes : 1 => No of days between : DATEDIFF( date1 , date2) .
 
 # SECOND DAY CONFIRMATION
 <img width="1916" height="903" alt="image" src="https://github.com/user-attachments/assets/f2ffba59-bc68-4aed-b92a-0986006d3059" />
+
+# CARD ISSUE DIFFERENCE 
+<img width="1885" height="841" alt="image" src="https://github.com/user-attachments/assets/913d0083-1bb0-41ea-b781-d08b6f4bb624" />
+
