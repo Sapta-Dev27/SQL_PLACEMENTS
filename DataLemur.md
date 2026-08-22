@@ -70,3 +70,7 @@ Notes : 1 => No of days between : DATEDIFF( date1 , date2) .
 
 # Compressed Mode 
 <img width="1879" height="820" alt="image" src="https://github.com/user-attachments/assets/c26c2ad3-8b84-42e5-9c8f-e0cf061fab04" />
+
+# Card Launch Success
+<img width="1600" height="704" alt="image" src="https://github.com/user-attachments/assets/475cae7d-09f1-4ac2-9560-d796f1481761" />
+
