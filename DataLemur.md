@@ -68,3 +68,5 @@ Notes : 1 => No of days between : DATEDIFF( date1 , date2) .
 # Histogram of Users and Purchases
 <img width="1600" height="702" alt="image" src="https://github.com/user-attachments/assets/3dfc5f77-7015-4f22-91b1-f22c7e23281d" />
 
+# Compressed Mode 
+<img width="1879" height="820" alt="image" src="https://github.com/user-attachments/assets/c26c2ad3-8b84-42e5-9c8f-e0cf061fab04" />
