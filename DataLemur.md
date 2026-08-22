@@ -65,3 +65,6 @@ Notes : 1 => No of days between : DATEDIFF( date1 , date2) .
 # CARD ISSUE DIFFERENCE 
 <img width="1885" height="841" alt="image" src="https://github.com/user-attachments/assets/913d0083-1bb0-41ea-b781-d08b6f4bb624" />
 
+# Histogram of Users and Purchases
+<img width="1600" height="702" alt="image" src="https://github.com/user-attachments/assets/3dfc5f77-7015-4f22-91b1-f22c7e23281d" />
+
