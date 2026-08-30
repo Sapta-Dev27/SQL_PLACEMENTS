@@ -19,3 +19,12 @@
 
 # SOLUTION :
 <img width="828" height="600" alt="image" src="https://github.com/user-attachments/assets/4da1e4a0-9713-4392-81e1-3b94c2e77c30" />
+
+# QUESTIONS :
+<img width="700" height="615" alt="image" src="https://github.com/user-attachments/assets/c0c8e1f0-a802-4ad9-9048-6a9f9fde831e" />
+<img width="717" height="167" alt="image" src="https://github.com/user-attachments/assets/7dc72d58-2adf-4ae5-a4d7-9c2a2e50da78" />
+
+
+# SOLUTIONS :
+
+<img width="1667" height="707" alt="image" src="https://github.com/user-attachments/assets/f38cedf7-4a2e-41f6-8080-1eecae9ba019" />
