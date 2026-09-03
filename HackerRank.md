@@ -52,3 +52,37 @@
 # QUESTION 10 :
 
 <img width="1887" height="903" alt="image" src="https://github.com/user-attachments/assets/29e0030c-6e79-4628-b93d-d64e82741109" />
+
+
+
+
+
+# QUESTION 11 :
+
+<img width="1826" height="847" alt="image" src="https://github.com/user-attachments/assets/6f0a5d93-4d8d-4d46-a993-1e078ff8f1c9" />
+
+
+#  QUESTION 12 :
+
+<img width="1890" height="832" alt="image" src="https://github.com/user-attachments/assets/5f5d35ce-bbbc-48f9-b3ec-b2443af9769e" />
+
+
+# question 13 : 
+
+<img width="1876" height="910" alt="image" src="https://github.com/user-attachments/assets/5680e3e2-c0c4-4846-8bb9-4480fe6799b7" />
+
+
+# question 14 : 
+
+<img width="1895" height="850" alt="image" src="https://github.com/user-attachments/assets/3940a5a1-45a5-4be0-a28b-4df21d4b6ddb" />
+
+
+# question 15 :
+
+<img width="1896" height="900" alt="image" src="https://github.com/user-attachments/assets/157384f1-e099-492b-ac85-c184f95317ce" />
+
+
+# question 16 :
+
+<img width="1858" height="857" alt="image" src="https://github.com/user-attachments/assets/aed286de-b1a1-44bf-8b40-f2404c8ff5ec" />
+
