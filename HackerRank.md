@@ -86,3 +86,11 @@
 
 <img width="1858" height="857" alt="image" src="https://github.com/user-attachments/assets/aed286de-b1a1-44bf-8b40-f2404c8ff5ec" />
 
+# questions 17 : 
+
+<img width="1823" height="812" alt="image" src="https://github.com/user-attachments/assets/37d2366f-9733-44ce-b77f-ddd9f0a84fe4" />
+
+
+# QUESTION 18 :
+
+<img width="1887" height="902" alt="image" src="https://github.com/user-attachments/assets/5f61ee20-ec54-4fc1-b796-f38dacb43ce3" />
