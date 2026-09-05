@@ -118,3 +118,65 @@
 # QUESTION 23 :
 
 <img width="1877" height="907" alt="image" src="https://github.com/user-attachments/assets/ccaa8209-2d7f-40c5-ac39-948854f3b02b" />
+
+
+# question 24 : 
+
+<img width="1600" height="766" alt="image" src="https://github.com/user-attachments/assets/25e4fec9-15a1-4d6c-a8bb-d9622cdf06a6" />
+
+# question 25 : 
+
+<img width="1600" height="762" alt="image" src="https://github.com/user-attachments/assets/a2b9c6f0-af44-4534-b7dc-68fb1f653d29" />
+
+# question 26 :
+
+<img width="1600" height="762" alt="image" src="https://github.com/user-attachments/assets/f4eb4cc0-a3bc-4a2d-bba5-a398a82f38f7" />
+
+# question 27 : 
+
+<img width="1600" height="351" alt="image" src="https://github.com/user-attachments/assets/7215bdb0-2d56-4423-a621-c61e2d047f2a" />
+
+# question 28 : 
+
+<img width="1600" height="287" alt="image" src="https://github.com/user-attachments/assets/e69d4704-7668-47ab-bfd9-cd56c4df8465" />
+
+
+# question 29 : 
+
+<img width="1600" height="378" alt="image" src="https://github.com/user-attachments/assets/3cc7dad9-be2b-4fc8-915e-d4bba735d7cf" />
+
+
+# question 30 : 
+
+<img width="1600" height="449" alt="image" src="https://github.com/user-attachments/assets/a114d106-4169-46a6-a364-b80cff3b69cc" />
+
+
+# question 31 : 
+
+<img width="1600" height="386" alt="image" src="https://github.com/user-attachments/assets/21208de0-b040-481f-8beb-3b0f86420448" />
+
+# question 32: 
+
+<img width="1600" height="773" alt="image" src="https://github.com/user-attachments/assets/e814e23c-42e8-488f-b0d3-b6562673c14c" />
+
+
+# question 33 : 
+
+<img width="1600" height="750" alt="image" src="https://github.com/user-attachments/assets/c6e26eac-c707-44b3-a0e4-93175b159c04" />
+
+
+# question 34 : 
+
+<img width="1600" height="741" alt="image" src="https://github.com/user-attachments/assets/09aad045-7468-43b1-b181-76d258684be3" />
+
+
+# question 35 : 
+
+<img width="1600" height="458" alt="image" src="https://github.com/user-attachments/assets/6f5f6f68-31de-4314-8403-93e973e7e13a" />
+
+
+# question 36 : 
+
+<img width="1600" height="460" alt="image" src="https://github.com/user-attachments/assets/4bdf66fa-bc83-4e31-8d98-9604844bcbca" />
+
+
