@@ -180,3 +180,6 @@
 <img width="1600" height="460" alt="image" src="https://github.com/user-attachments/assets/4bdf66fa-bc83-4e31-8d98-9604844bcbca" />
 
 
+# question 37 : 
+
+<img width="1600" height="633" alt="image" src="https://github.com/user-attachments/assets/61cb8c86-654e-4e06-9416-d028e4ce2094" />
