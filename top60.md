@@ -552,3 +552,210 @@ FROM EmployeeDetails;
 SELECT CONCAT(EmpId, ManagerId)
 FROM EmployeeDetails;
 ```
+
+# SQL Practice Questions & Answers
+
+## 1. Convert Employee Names to Uppercase and Cities to Lowercase
+
+### Question
+
+Write an SQL query to display all employee names in uppercase and all cities in lowercase.
+
+### Answer
+
+```sql
+SELECT
+    UPPER(FullName),
+    LOWER(City)
+FROM EmployeeDetails;
+```
+
+---
+
+## 2. Find Employees with Salary Between 5000 and 10000
+
+### Question
+
+Write an SQL query to fetch the employee ID, employee name, and salary of employees whose salary is between 5000 and 10000, including both values.
+
+### Answer
+
+```sql
+SELECT
+    e1.EmpId,
+    e1.FullName,
+    e2.Salary
+FROM EmployeeDetails AS e1
+LEFT JOIN EmployeeSalary AS e2
+    ON e1.EmpId = e2.EmpId
+WHERE e2.Salary >= 5000
+  AND e2.Salary <= 10000;
+```
+
+---
+
+## 3. Find Employees Who Joined in 2022
+
+### Question
+
+Write an SQL query to fetch the employee ID and full name of employees who joined the company in the year 2022.
+
+### Answer
+
+```sql
+SELECT
+    e1.EmpId,
+    e1.FullName
+FROM EmployeeDetails AS e1
+WHERE YEAR(DateOfJoining) = 2022;
+```
+
+---
+
+## 4. Find Employees Having Salary Information
+
+### Question
+
+Write an SQL query to fetch the employee ID, full name, city, and date of joining of all employees who have a salary record in the `EmployeeSalary` table.
+
+### Answer
+
+```sql
+SELECT
+    e1.EmpId,
+    e1.FullName,
+    e1.City,
+    e1.DateOfJoining
+FROM EmployeeDetails AS e1
+LEFT JOIN EmployeeSalary AS e2
+    ON e1.EmpId = e2.EmpId
+WHERE e2.Salary IS NOT NULL;
+```
+
+---
+
+## 5. Find Project-Wise Employee Count
+
+### Question
+
+Write an SQL query to fetch the project-wise count of distinct employees, sorted by the employee count in descending order.
+
+### Answer
+
+```sql
+SELECT
+    e2.Project,
+    COUNT(DISTINCT e1.EmpId) AS employee_count
+FROM EmployeeSalary AS e2
+LEFT JOIN EmployeeDetails AS e1
+    ON e1.EmpId = e2.EmpId
+GROUP BY e2.Project
+ORDER BY employee_count DESC;
+```
+
+---
+
+## 6. Find Employees Who Are Managers
+
+### Question
+
+Write an SQL query to find the employee IDs of employees who are managers of at least one other employee.
+
+### Answer
+
+```sql
+SELECT
+    e1.EmpId
+FROM EmployeeDetails AS e1
+JOIN EmployeeDetails AS e2
+    ON e1.EmpId = e2.ManagerId;
+```
+
+---
+
+## 7. Find Employees at Odd Row Numbers
+
+### Question
+
+Write an SQL query to fetch the employee ID, full name, and city of employees whose row number is odd when the employees are ordered by `EmpId`.
+
+### Answer
+
+```sql
+SELECT
+    e1.EmpId,
+    e1.FullName,
+    e1.City
+FROM
+(
+    SELECT *,
+           ROW_NUMBER() OVER (ORDER BY EmpId) AS row_no
+    FROM EmployeeDetails
+) AS e1
+WHERE row_no % 2 = 1;
+```
+
+---
+
+## 8. Find Employees at Even Row Numbers
+
+### Question
+
+Write an SQL query to fetch the employee ID, full name, and city of employees whose row number is even when the employees are ordered by `EmpId`.
+
+### Answer
+
+```sql
+SELECT
+    e1.EmpId,
+    e1.FullName,
+    e1.City
+FROM
+(
+    SELECT *,
+           ROW_NUMBER() OVER (ORDER BY EmpId) AS row_no
+    FROM EmployeeDetails
+) AS e1
+WHERE row_no % 2 = 0;
+```
+
+---
+
+## 9. Find Employees Ordered by Salary
+
+### Question
+
+Write an SQL query to display all employee details along with their salary information, sorted by salary in descending order.
+
+### Answer
+
+```sql
+SELECT *
+FROM EmployeeDetails AS e1
+LEFT JOIN EmployeeSalary AS e2
+    ON e1.EmpId = e2.EmpId
+ORDER BY e2.Salary DESC;
+```
+
+---
+
+# Tables Used
+
+## EmployeeDetails
+
+```text
+EmpId
+FullName
+ManagerId
+DateOfJoining
+City
+```
+
+## EmployeeSalary
+
+```text
+EmpId
+Project
+Salary
+Variable
+```
