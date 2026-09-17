@@ -759,3 +759,164 @@ Project
 Salary
 Variable
 ```
+
+
+# SQL Practice Questions & Answers
+
+## 1. Find Projects Whose Total Salary Exceeds the Maximum Project Average Salary
+
+### Question
+Find the projects whose total salary is greater than the maximum average salary among all projects.
+
+### Answer
+```sql
+SELECT
+    e2.Project
+FROM EmployeeSalary AS e2
+GROUP BY e2.Project
+HAVING SUM(e2.Salary) > (
+    SELECT MAX(avg_salary)
+    FROM (
+        SELECT AVG(e1.Salary) AS avg_salary
+        FROM EmployeeSalary AS e1
+        GROUP BY e1.Project
+    ) AS t1
+);
+```
+
+---
+
+## 2. Add a Role Column to EmployeeDetails
+
+### Question
+Alter the `EmployeeDetails` table and add a `Role` column of type `VARCHAR(255)`.
+
+### Answer
+```sql
+ALTER TABLE EmployeeDetails
+ADD Role VARCHAR(255);
+```
+
+---
+
+## 3. Concatenate Employee Name and ID
+
+### Question
+Display each employee's name followed by their employee ID in the format `FullName(EmpId)`.
+
+### Answer
+```sql
+SELECT
+    CONCAT(FullName, '(', EmpId, ')') AS new_name
+FROM EmployeeDetails;
+```
+
+---
+
+## 4. Find the Length of Each Employee's Name
+
+### Question
+Display each employee's full name along with the length of their name.
+
+### Answer
+```sql
+SELECT
+    FullName,
+    LENGTH(FullName) AS Length_name
+FROM EmployeeDetails;
+```
+
+---
+
+## 5. Find Employees Whose Total Compensation Exceeds 20000
+
+### Question
+Find the employee ID, full name, city, and salary of employees whose salary plus variable pay plus 20% of their salary is greater than 20000.
+
+### Answer
+```sql
+SELECT
+    e1.EmpId,
+    e1.FullName,
+    e1.City,
+    e2.Salary
+FROM EmployeeDetails AS e1
+LEFT JOIN EmployeeSalary AS e2
+    ON e1.EmpId = e2.EmpId
+WHERE (e2.Variable + e2.Salary + e2.Salary * 0.2) > 20000;
+```
+
+---
+
+## 6. Find Employees Who Joined in January
+
+### Question
+Find the employee ID, full name, and date of joining of employees who joined in January.
+
+### Answer
+```sql
+SELECT
+    e1.EmpId,
+    e1.FullName,
+    e1.DateOfJoining
+FROM EmployeeDetails AS e1
+WHERE MONTHNAME(e1.DateOfJoining) = 'January';
+```
+
+---
+
+## 7. Find Employees Who Did Not Join in January
+
+### Question
+Find the employee ID, full name, and date of joining of employees who did not join in January.
+
+### Answer
+```sql
+SELECT
+    e1.EmpId,
+    e1.FullName,
+    e1.DateOfJoining
+FROM EmployeeDetails AS e1
+WHERE MONTH(e1.DateOfJoining) != 1;
+```
+
+---
+
+## 8. Find Employees with Even Salaries
+
+### Question
+Find the employee ID and salary of employees whose salary is an even number.
+
+### Answer
+```sql
+SELECT
+    EmpId,
+    Salary
+FROM EmployeeSalary
+WHERE Salary % 2 = 0;
+```
+
+---
+
+## 9. Find Salaries Having at Least 5 Digits
+
+### Question
+Find the employee ID and salary of employees whose salary contains at least 5 digits.
+
+### Answer
+```sql
+SELECT
+    EmpId,
+    Salary
+FROM EmployeeSalary
+WHERE LENGTH(Salary) >= 5;
+```
+
+---
+
+# Notes
+
+- `LENGTH()` is commonly used in MySQL. In SQL Server, use `LEN()`.
+- `MONTHNAME()` is MySQL syntax. In SQL Server, use `DATENAME(MONTH, DateOfJoining)`.
+- `MONTH(DateOfJoining) != 1` is clearer than comparing the month number with the string `'01'`.
+
